@@ -16,4 +16,6 @@ use App\Http\Controllers\TodoListController;
 
 Route::get('/', [TodoListController::class, 'index']);
 
-Route::post('/saveItemRoute', [TodoListController::class, 'saveItem'])->name('saveItem');
+Route::post('/saveRoute', [TodoListController::class, 'save'])->name('saveRoute');
+
+Route::post('/deleteRoute/{id}', [TodoListController::class, 'delete'])->name('deleteRoute');

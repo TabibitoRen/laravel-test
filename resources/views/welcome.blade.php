@@ -29,11 +29,17 @@
                 <tr>
                     <td>{{ $todoList->id }}</td>
                     <td>{{ $todoList->name }}</td>
+                    <td>
+                        <form method="post" action="{{ route('deleteRoute', $todoList->id) }}" accept-charset="UTF-8">
+                        {{ csrf_field() }}
+                        <button style="max-height: 32px; margin-left: 24px">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
             </table>
 
-            <form method="post" action="{{ route('saveItem') }}" accept-charset="UTF-8">
+            <form method="post" action="{{ route('saveRoute') }}" accept-charset="UTF-8">
                 {{ csrf_field() }}
 
                 <label for="listItem">New Todo List</label>
