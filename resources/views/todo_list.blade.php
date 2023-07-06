@@ -18,48 +18,51 @@
     <body class="antialiased">
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div style="color: white;">
-            <h1>Todo List</h1>
+            <h1>{{ $todoList->name }}</h1>
 
             <table>
                 <tr>
                     <th>id</th>
                     <th>name</th>
                 </tr>
-            @foreach ($todoLists as $todoList)
+            @foreach ($todos as $todo)
                 <tr>
-                    <td>{{ $todoList->id }}</td>
-                    <td>{{ $todoList->name }}</td>
+                    <td>{{ $todo->id }}</td>
+                    <td>{{ $todo->name }}</td>
                     <td>
-                        <form method="post" action="{{ route('updateRoute', $todoList->id) }}" accept-charset="UTF-8">
+                        <label for="is_completed">Completed?</label>
+                        <input type="checkbox" name="is_completed" disabled @if(!!$todo->is_completed) checked @endif >
+                    </td>
+
+                    @if(!$todo->is_completed)
+                    <td>
+                        <form method="post" action="{{ route('todo/markCompleted', [$todoList->id, $todo->id]) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
-                        <input style="color: black" type="text" name="name" placeholder="Write here to rename"/>
-                        <button style="max-height: 32px; margin-left: 24px">Rename</button>
+                        <button style="max-height: 32px; margin-left: 24px">Mark Completed</button>
                         </form>
                     </td>
+                    @endif
                     <td>
-                        <form method="post" action="{{ route('deleteRoute', $todoList->id) }}" accept-charset="UTF-8">
+                        <form method="post" action="{{ route('todo/deleteRoute', [$todoList->id, $todo->id]) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
                         <button style="max-height: 32px; margin-left: 24px">Delete</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form method="get" action="{{ route('todo_list', $todoList->id) }}" accept-charset="UTF-8">
-                        {{ csrf_field() }}
-                        <button style="max-height: 32px; margin-left: 24px">View List</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
             </table>
-
+            
             <br/>
-            <form method="post" action="{{ route('saveRoute') }}" accept-charset="UTF-8">
+            <form method="post" action="{{ route('todo/saveRoute', $todoList->id) }}" accept-charset="UTF-8">
                 {{ csrf_field() }}
 
-                <label for="listItem">New Todo List</label>
+                <label for="listItem">New Todo</label>
                 <input style="color: black" type="text" name="name"/>
                 <button>Save</button>
             </form>
-        </div>
+            
+            <br/>
+
+            <a href="/">Go back to Todo Lists</a>
     </body>
 </html>

@@ -18,20 +18,24 @@ class TodoListController extends Controller
         $newTodoList->name =  $request->name;
         $newTodoList->save();
 
-        return redirect('/');
+        return redirect("/");
     }
 
     public function delete(string $id) {
         
-         DB::table('todo_lists')->where('id', $id)->delete();
+        DB::table('todo_lists')->where('id', $id)->delete();
 
-         return redirect('/');
+        return redirect("/");
     }
 
     public function update(Request $request, string $id) {
-        
         DB::table('todo_lists')->where('id', $id)->update(['name' => $request->name]);
 
-        return redirect('/');
-   }
+        return redirect("/");
+    }
+
+    public function view(string $id) {
+        return redirect("todo_list/{$id}");
+    }
+
 }
