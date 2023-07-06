@@ -30,6 +30,13 @@
                     <td>{{ $todoList->id }}</td>
                     <td>{{ $todoList->name }}</td>
                     <td>
+                        <form method="post" action="{{ route('updateRoute', $todoList->id) }}" accept-charset="UTF-8">
+                        {{ csrf_field() }}
+                        <input style="color: black" type="text" name="name"/>
+                        <button style="max-height: 32px; margin-left: 24px">Rename</button>
+                        </form>
+                    </td>
+                    <td>
                         <form method="post" action="{{ route('deleteRoute', $todoList->id) }}" accept-charset="UTF-8">
                         {{ csrf_field() }}
                         <button style="max-height: 32px; margin-left: 24px">Delete</button>

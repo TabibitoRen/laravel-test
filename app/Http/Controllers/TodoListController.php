@@ -21,10 +21,17 @@ class TodoListController extends Controller
         return redirect('/');
     }
 
-    public function delete($id) {
+    public function delete(string $id) {
         
-         DB::delete('DELETE FROM todo_lists WHERE ID = ?', [$id]);
+         DB::table('todo_lists')->where('id', $id)->delete();
 
          return redirect('/');
     }
+
+    public function update(Request $request, string $id) {
+        
+        DB::table('todo_lists')->where('id', $id)->update(['name' => $request->name]);
+
+        return redirect('/');
+   }
 }
